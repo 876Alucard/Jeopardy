@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="./index.css">
+        <title>Jeopardy</title>
+    </head>
+    <body>
+        <header>Jeopardy</header>
+        <section class="game">
+            <div class="intro">
+                <button>Let's Begin</button>
+            </div>
+            <div class="faceoff fadeOut">
+                <form action="index.html" method="POST" class="faceoff fadeOut">
+                    <fieldset>
+                        <p>Please fill in this form to create an account.</p>
+                        <hr>
+                        <label for="fname"><b>First Name</b></label>
+                        <input type="text" placeholder="Enter First Name" name="fname" required>
+                        <label for="lname"><b>Last Name</b></label>
+                        <input type="text" placeholder="Enter Last Name" name="lname" required>
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" placeholder="Enter Email" name="email" required>
+                        <label for="psw"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <label for="psw-repeat"><b>Repeat Password</b></label>
+                        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                        <label for="dob"><b>Date of Birth</b></label>
+                        <input type="date" placeholder="Enter Date of Birth" name="dob" required>
+                        <label for="age"><b>Age</b></label>
+                        <input type="number" placeholder="Enter Age" name="age" required>
+                        <label for="country"><b>Country</b></label>
+                        <input type="text" placeholder="Enter Country" name="country" required>
+                        <label for="image"><b>Image</b></label>
+                        <input type="file" placeholder="Upload Image" name="image" required>
+                        <hr>
+                        <!--Add a button, called Register to the entry form created in Task 1 and ensure that this button calls the function, Register() -->
+                        <button type="submit" class="registerbtn" onclick="register()">Register</button>
+                    </fieldset>
+                </form>
+        
+            </div>
+        </section>
+        <!--Create a form to accept Player’s First and Last Name, DOB, Email, Age, Gender, Address (street, city, town, country), 
+        educational level and image of self. -->
+        
+            
+
+
+
+
+        <script src="app.js" charset="UTF-8"></script>
+    </body>
+</html>

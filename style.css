@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Press+Start+2P&family=Trispace&display=swap');
+
+body
+{
+    background-image: url(./img/wp2757834.gif);
+    background-size: 100%;
+    background-attachment: fixed;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+#header
+{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    align-content: space-around;
+    justify-content: center;
+    margin-top: 50px;
+    text-align: center;
+    color: #ECFC04;
+    font-size: 30px;
+    padding: 10px;
+}
+#howto{
+    color: #ebfc04bb;
+}
+.intro
+{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+    height: 50vh;
+    transition: opacity 0.6s ease;
+
+}
+
+.intro button
+{
+    padding: 10px;
+    max-width: fit-content;
+    cursor: pointer;
+}
+
+button
+{
+    background-color:#BCAFDC;
+    border-radius: 5px;
+    font-family: 'Press Start 2P', sans-serif;
+    color: #301E51;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+div.regForm
+{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 950px;
+    background-color: #ffb2e136;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 20px;
+    position: absolute;
+    transform: translate(15%, -65%);
+    height: 50vh;
+    transition: opacity 0.1s ease 0.1s;
+
+}
+
+.fadeOutButton{
+    transition: opacity 0.5s ease 0.1s;
+    position:static;
+}
+
+div.fadeOut, div.fadeOutButton, div.fadeOutCategories
+{
+    opacity: 0;
+    pointer-events: none;
+}
+
+div.fadeIn, div.fadeInButton, div.fadeInCategories
+{
+    opacity: 1;
+    pointer-events: all;
+}
+#final{
+    /**/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(50%,10%);
+}
+
+/*Board Stuff*/
+
+:root {
+    --blue: linear-gradient(180deg, #0120CB 0%, #011BA9 100%);
+    --yellow: #FFE817;
+    --green: #90FF7E;
+    --red: #FFA57E;
+    --spooky-orange: #ad4e08;
+    --spooky-orange-text: #fffec8;
+    --gap: 0.1em;
+    --text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+ }
+ 
+ div.app{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+ }
+ * {
+    box-sizing: border-box;
+ }
+ 
+ .top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-shadow: var(--text-shadow);
+ }
+ .score {
+    display: flex;
+    align-items: center;
+ }
+ .score-count {
+    color: var(--yellow);
+    font-size: 2em;
+    font-weight:bold;
+    margin-left: 0.2em;
+ }
+ 
+ .column ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+ }
+ .board {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    padding: 20px;
+ }
+ .board .column {
+    flex: 1;
+    margin-left: var(--gap);
+    margin-right: var(--gap);
+ }
+ .board .column header {
+    text-transform: capitalize;
+    background: var(--blue);
+    text-align: center;
+    margin-bottom: 1em;
+    height: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ .board .column li {
+    background: var(--blue);
+    color: var(--yellow);
+    height: 3em;
+    margin-bottom: 0.25em;
+ }
+ .board .column button {
+    height: 100%;
+    color: inherit;
+    font-size: 2em;
+    border: 0;
+    background: none;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    text-shadow: var(--text-shadow);
+    font-weight:bold;
+ }
+ .board .column button.used {
+    visibility: hidden;
+ }
+ 
+ .card-modal {
+    opacity: 0;
+    pointer-events:none;
+    transition: opacity 0.4s;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--blue);
+    position: fixed;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ .card-modal.visible {
+    opacity: 1;
+    pointer-events:initial;
+ }
+ .card-modal.showing-result .result {
+    display:block;
+ }
+ 
+ .card-model .clue-text {
+    margin-bottom: 2em;
+ }
+ 
+ .result,
+ .card-modal.showing-result form {
+    display:none;
+ }
+ 
+ .card-modal form {
+    display: flex;
+ }
+ .card-modal form input[type="text"] {
+    display: block;
+    flex-grow: 1;
+    height: 3em;
+    line-height: 3em;
+    border: 0;
+    text-align: center;
+    border-top-left-radius: 0.4em;
+    border-bottom-left-radius: 0.4em;
+ }
+ .card-modal form button[type="submit"] {
+    padding-left: 2em;
+    padding-right: 2em;
+    cursor: pointer;
+    font-family: inherit;
+    background: var(--yellow);
+    border: 0;
+    font-size: inherit;
+    border-top-right-radius: 0.4em;
+    border-bottom-right-radius: 0.4em;
+ }
+ .card-modal-inner {
+    width: 60%;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+ }
+ 
+ .result_success, .result_fail {
+    font-size: 20px;
+    font-weight:bold;
+ }
+ .result_success {
+    color: var(--green);
+ }
+ .result_fail {
+    color: var(--red);
+ }
+ .result_correct-answer-text {
+    font-weight:bold;
+    font-size: 2em;
+    display:block;
+    margin-left: 0.1em;
+ }

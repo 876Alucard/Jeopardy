@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Jeopardy</title>
+    </head>
+    <body>
+        <section name="game">
+            <div class="intro">
+                <p id="header">Welcome to Jeopardy</p>
+                <p id="howto">
+                    How to Play: <br>
+                    1. Click on a category to reveal the questions. <br>
+                    2. Click on a question to reveal the answer. <br>
+                    3. Click on the answer to reveal the next question. <br>
+                    4. Click on the next question to reveal the answer. <br>
+                    5. Repeat steps 3 and 4 until all questions have been answered. <br>
+                    6. Click on the "Final Jeopardy" button to reveal the final question. <br>
+                    7. Click on the final question to reveal the answer. <br>
+                    8. Click on the answer to reveal the final score. <br>
+                    9. Click on the "Play Again" button to play again. <br>
+                </p>
+                <button>Let's Begin</button>
+            </div>
+            <div class="regForm fadeOut">
+                <form class="form">
+                    <fieldset>
+                        <div>
+                        <label>First Name<input type="text" id="fname" name="fname" placeholder="Enter your First Name" minlength="4" ></input></label>
+                        <label>Last Name<input type="text" id="lname" name="lname" placeholder="Enter your Last Name" minlength="4" id="lname"></input></label><br>
+                        <label>Date of Birth<input type="date" name="dob" id="dob"></input></label>
+                        <label>Email<input type="email" id="email" name="email" placeholder="johndoe@SomeEmail.com" minlength="8"></input></label>
+                        <label>Age<input type="number" id="age" name="age" ></input></label>
+                        <fieldset>
+                            <legend>Gender</legend>
+                            <label>Male<input type="radio" id="mgender" name="gender"></input></label>
+                            <label>Female<input type="radio" id="fgender" name="gender"></input></label>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Address</legend>
+                            <label>Street<input type="text" id="street" name="street" placeholder="Enter your Street"></input></label>
+                            <label>City<input type="text" id="city" name="city" placeholder="Enter your City"></input></label>
+                            <label>Town<input type="text" id="town" name="town" placeholder="Enter your Town"></input></label><br>
+                            <label>Country<input type="text" id="country" name="country" placeholder="Enter your Country"></input></label>
+                        </fieldset>
+                        <label>Educational Level
+                            <select id="education" name="education">
+                                <option value="none">------</option>
+                                <option value="primary">Primary</option>
+                                <option value="secondary">Secondary</option>
+                                <option value="tertiary">Tertiary</option>
+                            </select>
+                        </label><br>
+                        <label>Upload an Image of Yourself<input type="file" id="image" name="image"></input></label><br>
+                        <button type="submit">Register</button>
+                    </fieldset><br>
+                </form>
+                <div class="gameButtonsContainer fadeOutButton">
+                    <button type="button" id="playButton" >Play</button>
+                </div>
+            </div>
+            <div class="categories fadeOutCategories">
+                <div class="app">
+   
+                    <!-- Top section -->
+                    <header class="top-header">
+                       <p class="score">Score <span class="score-count"></span></p>
+                    </header>
+                    
+                    <!-- container for the board -->
+                     <div class="board">
+                        <!-- categories get injected here -->
+                     </div>
+                    
+                    <!-- invisible container for the card prompt -->
+                     <div class="card-modal">
+                        <div class=card-modal-inner>
+                            <label id="minutes">00</label>:<label id="seconds">60</label>
+                           <h2 class="clue-text"><!-- clue gets injected here --></h2>
+                           <form autocomplete="off">
+                              <input name="user-answer" type="text" />
+                              <button type="submit">Answer</button>
+                           </form>
+                           <div class="result">
+                              <p class="result_success">CORRECT</p>
+                              <p class="result_fail">INCORRECT</p>
+                              <p class="result_correct-answer">
+                                 The correct answer is <span class="result_correct-answer-text"><!--answer gets injected here--></span>
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                 </div>
+            </div>
+        </section>
+        <script>
+            
+            const introScreen = document.querySelector('.intro');
+            const registerScreen = document.querySelector('.regForm');
+            const formScreen = document.querySelector('.form');
+            const letsbeginButton = document.querySelector('.intro button');
+            const playButton = document.querySelector('.gameButtonsContainer #playButton');
+            const categoryScreen = document.querySelector('.categories');
+            let PlayersData = [];
+            
+            // begin button functions
+            function letsbegin(){
+                // Fade in game from intro:
+                letsbeginButton.addEventListener('click', () =>
+                {
+                    introScreen.classList.add('fadeOut');
+                    registerScreen.classList.add('fadeIn');
+                })
+                //go to register form
+                //go to form screen
+                letsbeginButton.addEventListener('click', () =>
+                {
+                    registerScreen.classList.add('fadeOut');
+                    formScreen.classList.add('fadeIn');
+                });
+            }letsbegin();
+
+
+            formScreen.addEventListener("submit", (e)=>{
+                e.preventDefault();
+
+                if(validateForm()){
+                    Register();
+                    disableRegister();
+                    showGameButtons();
+                } else {
+                    return;
+                };
+
+
+            })
+
+            function disableRegister(){
+                const formElements = document.querySelectorAll(".form input, .form select, .form button");
+                for (i = 0; i < formElements.length; i++){
+                    formElements[i].disabled = true;
+                }
+            }
+            function showGameButtons(){
+                let gameButtons = document.querySelector(".gameButtonsContainer");
+                gameButtons.classList.add('fadeInButton');
+
+                playButton.addEventListener('click', () =>
+                {
+                    registerScreen.classList.remove('fadeIn');
+                    categoryScreen.classList.add('fadeIn')
+                })
+            }
+
+            function showTable(){
+                let showTable = document.querySelector(".categories");
+                categoryTable.classList.add('fadeInCategory');
+            }
+
+            function Register(){
+                
+                let fname = document.getElementById("fname").value;
+                let lname = document.getElementById("lname").value;
+                let dob = document.getElementById("dob").value;
+                let email = document.getElementById("email").value;
+                let age = document.getElementById("age").value;
+                let gender;
+                if (document.getElementById("mgender").checked){
+                    gender = "male";
+                } else if(document.getElementById("fgender").checked){
+                    gender = "female";
+                }
+                let street = document.getElementById("street").value;
+                let city = document.getElementById("city").value;
+                let town = document.getElementById("town").value;
+                let country = document.getElementById("country").value;
+                let education = document.getElementById("education").value;
+                let image = document.getElementById("image").value;
+                
+                if(!fname || !lname || !dob || !email || !age || !gender || !street || !city || !town || !country || !education || !image){
+                    alert("Please fill in all fields");
+                }else{
+                    PlayersData.push({fname, lname, dob, email, age, gender, street, city, town, country, education, image});
+                }
+                console.log(PlayersData);
+            };
+
+            function validateForm(){
+                if(document.getElementById("fname").value == ""){
+                    alert("Please enter your first name.");
+                    document.getElementById("fname").focus();
+                    return false;
+                }
+                else if(document.getElementById("lname").value == ""){
+                    alert("Please enter your last name.");
+                    document.getElementById("fname").focus();
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+
+            //timer
+            const secondsLabel = document.getElementById("seconds");
+            let totalSeconds = 60;
+            
+
+            function setTime() {
+            totalSeconds-=1;
+            secondsLabel.innerHTML = totalSeconds;
+            if (totalSeconds <= 0) {
+                clearInterval(totalSeconds = 0);
+                return;
+
+            }
+            }
+
+            //board stuff
+            class board {
+                constructor(element, options={}) {
+                    //Which categories we should use (or use default is nothing provided)
+                    this.useCategoryIds = options.useCategoryIds || [ 190, 4483, 88, 218, 100];       
+                
+                    //Database
+                    this.categories = [];
+                    this.clues = {};
+                    
+                    //State
+                    this.currentClue = null;
+                    this.score = 0;
+                    
+                    //Elements
+                    this.boardElement = element.querySelector(".board");
+                    this.scoreCountElement = element.querySelector(".score-count");
+                    this.formElement = element.querySelector("form");
+                    this.inputElement = element.querySelector("input[name=user-answer]");
+                    this.modalElement = element.querySelector(".card-modal");
+                    this.clueTextElement = element.querySelector(".clue-text");
+                    this.resultElement = element.querySelector(".result");
+                    this.resultTextElement = element.querySelector(".result_correct-answer-text");
+                    this.successTextElement = element.querySelector(".result_success");
+                    this.failTextElement = element.querySelector(".result_fail");
+            }
+            
+            initGame() {
+                //Bind event handlers
+                this.boardElement.addEventListener("click", event => {
+                    if (event.target.dataset.clueId) {
+                        this.handleClueClick(event);
+                    }
+                });
+                this.formElement.addEventListener("submit", event => {
+                    this.handleFormSubmit(event);
+                });
+                
+                //Render initial state of score
+                this.updateScore(100);
+                
+                //Kick off the category fetch
+                this.fetchCategories();
+            }
+            
+            
+            fetchCategories() {      
+                //Fetch all of the data from the API
+                const categories = this.useCategoryIds.map(category_id => {
+                    return new Promise((resolve, reject) => {
+                        fetch(`https://jservice.io/api/category?id=${category_id}`)
+                        .then(response => response.json()).then(data => {
+                            resolve(data);
+                        });
+                    });
+                });
+                
+                //Sift through the data when all categories come back
+                Promise.all(categories).then(results => {
+                    
+                    //Build up our list of categories
+                    results.forEach((result, categoryIndex) => {
+                        
+                        //Start with a blank category
+                        var category = {
+                        title: result.title,
+                        clues: []
+                        }
+                        
+                        //Add every clue within a category to our database of clues
+                        var clues = shuffle(result.clues).splice(0,5).forEach((clue, index) => {
+                        console.log(clue)
+                        
+                        //Create unique ID for this clue
+                        var clueId = categoryIndex + "-" + index;
+                        category.clues.push(clueId);
+                        
+                        //Add clue to DB
+                        this.clues[clueId] = {
+                            question: clue.question,
+                            answer: clue.answer,
+                            value: (index + 1) * 100
+                        };
+                        })
+                        
+                        //Add this category to our DB of categories
+                        this.categories.push(category);
+                    });
+                    
+                    //Render each category to the DOM
+                    this.categories.forEach((c) => {
+                        this.renderCategory(c);
+                    });
+                });
+            }
+            
+            renderCategory(category) {      
+                let column = document.createElement("div");
+                column.classList.add("column");
+                column.innerHTML = (
+                    `<header>${category.title}</header>
+                    <ul>
+                    </ul>`
+                ).trim();
+                
+                var ul = column.querySelector("ul");
+                category.clues.forEach(clueId => {
+                    var clue = this.clues[clueId];
+                    ul.innerHTML += `<li><button data-clue-id=${clueId}>${clue.value}</button></li>`
+                })
+                
+                //Add to DOM
+                this.boardElement.appendChild(column);
+            }
+            
+            updateScore(change) {
+                this.score += change;
+                this.scoreCountElement.textContent = this.score;
+            }
+            
+            handleClueClick(event) {
+                var clue = this.clues[event.target.dataset.clueId];
+            
+                //Mark this button as used
+                event.target.classList.add("used");
+
+                setInterval(setTime, 1000);
+                
+                //Clear out the input field
+                this.inputElement.value = "";
+                
+                //Update current clue
+                this.currentClue = clue;
+            
+                //Update the text
+                this.clueTextElement.textContent = this.currentClue.question;
+                this.resultTextElement.textContent = this.currentClue.answer;
+            
+                //Hide the result
+                this.modalElement.classList.remove("showing-result");
+                
+                //Show the modal
+                this.modalElement.classList.add("visible");
+                this.inputElement.focus();
+            }
+            
+            //Handle an answer from user
+            handleFormSubmit(event) {
+                event.preventDefault();
+                
+                var isCorrect = this.cleanseAnswer(this.inputElement.value) === this.cleanseAnswer(this.currentClue.answer);
+                if (isCorrect && totalSeconds > 0) {
+                    this.updateScore(this.currentClue.value);
+                }else{
+                    this.updateScore(-this.currentClue.value);
+                }
+                
+                //Show answer
+                this.revealAnswer(isCorrect);
+            }
+            
+            //Standardize an answer string so we can compare and accept variations
+            cleanseAnswer(input="") {
+                var friendlyAnswer = input.toLowerCase();
+                friendlyAnswer = friendlyAnswer.replace("<i>", "");
+                friendlyAnswer = friendlyAnswer.replace("</i>", "");
+                friendlyAnswer = friendlyAnswer.replace(/ /g, "");
+                friendlyAnswer = friendlyAnswer.replace(/"/g, "");
+                friendlyAnswer = friendlyAnswer.replace(/^a /, "");
+                friendlyAnswer = friendlyAnswer.replace(/^an /, "");      
+                return friendlyAnswer.trim();
+            }
+            
+            
+            revealAnswer(isCorrect) {
+                
+                //Show the individual success/fail case
+                this.successTextElement.style.display = isCorrect ? "block" : "none";
+                this.failTextElement.style.display = !isCorrect ? "block" : "none";
+                
+                //Show the whole result container
+                this.modalElement.classList.add("showing-result");
+                
+                //Disappear after a short bit
+                setTimeout(() => {
+                    this.modalElement.classList.remove("visible");
+                }, 3000);
+            }
+            
+            }
+
+            function shuffle(a) {
+                var j, x, i;
+                for (i = a.length - 1; i > 0; i--) {
+                    j = Math.floor(Math.random() * (i + 1));
+                    x = a[i];
+                    a[i] = a[j];
+                    a[j] = x;
+                }
+                return a;
+            }
+            
+            const game = new board( document.querySelector(".app"), {});
+            game.initGame();
+        </script>
+    </body>
+</html>
